@@ -282,80 +282,73 @@
 
     <script>
         const cocktails = {
-    "Eco Jalapeño Margarita": {
-        name: "Eco Jalapeño Margarita",
-        description: "Un twist piccante sul classico, con tequila, succo di lime fresco, sciroppo d'agave naturale e un tocco di jalapeño per un kick sostenibile.",
-        profile: {
-            innovazione: 7,
-            sostenibilità: 8,
-            complessità: 6,
-            freschezza: 9,
-            energia: 8
-        }
-    },
-    "Grapefruit Negroni": {
-        name: "Grapefruit Negroni",
-        description: "Una versione rinfrescante del Negroni, con tequila, liquore al pompelmo e bitter. Un equilibrio perfetto tra dolce e amaro.",
-        profile: {
-            innovazione: 6,
-            sostenibilità: 7,
-            complessità: 8,
-            freschezza: 7,
-            energia: 6
-        }
-    },
-    "Green Pepper Gimlet": {
-        name: "Green Pepper Gimlet",
-        description: "Un Gimlet innovativo con gin, succo di limone fresco e uno sciroppo di friggitelli. Un cocktail che unisce freschezza e un sottile sapore vegetale.",
-        profile: {
-            innovazione: 9,
-            sostenibilità: 8,
-            complessità: 7,
-            freschezza: 8,
-            energia: 7
-        }
-    },
-    "Citrus Spritz": {
-        name: "Citrus Spritz",
-        description: "Un cocktail leggero e rinfrescante con vodka, Aperol, succo di limone e cedrata. Perfetto per le giornate calde.",
-        profile: {
-            innovazione: 5,
-            sostenibilità: 6,
-            complessità: 4,
-            freschezza: 10,
-            energia: 7
-        }
-    },
-    "Yuzu Whisky Sour": {
-        name: "Yuzu Whisky Sour",
-        description: "Un sour sofisticato con whisky, sciroppo di yuzu, succo di limone e un tocco di Stillabunt. Un mix equilibrato di dolce, aspro e amaro.",
-        profile: {
-            innovazione: 8,
-            sostenibilità: 7,
-            complessità: 9,
-            freschezza: 6,
-            energia: 7
-        }
-    },
-    "Violet Sky": {
-        name: "Violet Sky",
-        description: "Un cocktail floreale e fruttato con liquore alla violetta, liquore all'albicocca, succo di limone, sciroppo di zucchero e un top di soda.",
-        profile: {
-            innovazione: 7,
-            sostenibilità: 6,
-            complessità: 5,
-            freschezza: 8,
-            energia: 6
-        }
-    }
-};
-	    let userProfile = {
-    innovazione: 0,
-    sostenibilità: 0,
-    complessità: 0,
-    freschezza: 0,
-    energia: 0
-};
+            "Eco Jalapeño Margarita": {
+                name: "Eco Jalapeño Margarita",
+                description: "Un twist piccante sul classico, con tequila, succo di lime fresco, sciroppo d'agave naturale e un tocco di jalapeño per un kick sostenibile.",
+                profile: {
+                    innovazione: 7,
+                    sostenibilità: 8,
+                    complessità: 6,
+                    freschezza: 9,
+                    energia: 8
+                }
+            },
+            "Grapefruit Negroni": {
+                name: "Grapefruit Negroni",
+                description: "Una versione rinfrescante del Negroni, con tequila, liquore al pompelmo e bitter. Un equilibrio perfetto tra dolce e amaro.",
+                profile: {
+                    innovazione: 6,
+                    sostenibilità: 7,
+                    complessità: 8,
+                    freschezza: 7,
+                    energia: 6
+                }
+            },
+            "Green Pepper Gimlet": {
+                name: "Green Pepper Gimlet",
+                description: "Un Gimlet innovativo con gin, succo di limone fresco e uno sciroppo di friggitelli. Un cocktail che unisce freschezza e un sottile sapore vegetale.",
+                profile: {
+                    innovazione: 9,
+                    sostenibilità: 8,
+                    complessità: 7,
+                    freschezza: 8,
+                    energia: 7
+                }
+            },
+            "Citrus Spritz": {
+                name: "Citrus Spritz",
+                description: "Un cocktail leggero e rinfrescante con vodka, Aperol, succo di limone e cedrata. Perfetto per le giornate calde.",
+                profile: {
+                    innovazione: 5,
+                    sostenibilità: 6,
+                    complessità: 4,
+                    freschezza: 10,
+                    energia: 7
+                }
+            },
+            "Yuzu Whisky Sour": {
+                name: "Yuzu Whisky Sour",
+                description: "Un sour sofisticato con whisky, sciroppo di yuzu, succo di limone e un tocco di Stillabunt. Un mix equilibrato di dolce, aspro e amaro.",
+                profile: {
+                    innovazione: 8,
+                    sostenibilità: 7,
+                    complessità: 9,
+                    freschezza: 6,
+                    energia: 7
+                }
+            },
+            "Violet Sky": {
+                name: "Violet Sky",
+                description: "Un cocktail floreale e fruttato con liquore alla violetta, liquore all'albicocca, succo di limone, sciroppo di zucchero e un top di soda.",
+                profile: {
+                    innovazione: 7,
+                    sostenibilità: 6,
+                    complessità: 5,
+                    freschezza: 8,
+                    energia: 6
+                }
+            }
+        };
 
         const questions = [
             {
@@ -440,11 +433,12 @@
             updateProgressBar();
         }
 
-       function handleAnswer(questionIndex, optionIndex) {
-    const selectedOption = questions[questionIndex].options[optionIndex];
-    for (let [key, value] of Object.entries(selectedOption.score)) {
-        userProfile[key] += value;
-    }
+        function handleAnswer(optionIndex) {
+            const selectedOption = questions[currentQuestion].options[optionIndex];
+            for (let [key, value] of Object.entries(selectedOption.score)) {
+                userProfile[key] += value;
+            }
+
             currentQuestion++;
             if (currentQuestion < questions.length) {
                 displayQuestion();
@@ -465,22 +459,22 @@
         }
 
         function findBestMatch() {
-    let bestMatch = null;
-    let highestScore = -Infinity;
+            let bestMatch = null;
+            let lowestDifference = Infinity;
 
-    for (let [cocktailName, cocktail] of Object.entries(cocktails)) {
-        let score = 0;
-        for (let trait in userProfile) {
-            score += (5 - Math.abs(cocktail.profile[trait] - userProfile[trait])) * 2;
-        }
-        if (score > highestScore) {
-            highestScore = score;
-            bestMatch = cocktail;
-        }
-    }
+            for (let cocktail of Object.values(cocktails)) {
+                let totalDifference = 0;
+                for (let trait in userProfile) {
+                    totalDifference += Math.abs(cocktail.profile[trait] - userProfile[trait]);
+                }
+                if (totalDifference < lowestDifference) {
+                    lowestDifference = totalDifference;
+                    bestMatch = cocktail;
+                }
+            }
 
-    return bestMatch;
-}
+            return bestMatch;
+        }
 
         function showResult() {
             document.getElementById('loading').style.display = 'none';
@@ -528,43 +522,5 @@
         // Inizializza il quiz
         document.getElementById('startBtn').addEventListener('click', startQuiz);
     </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 </body>
 </html>
